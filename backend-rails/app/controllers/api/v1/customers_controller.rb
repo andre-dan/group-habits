@@ -3,17 +3,17 @@ module Api
     class CustomersController < Api::V1::ApiController
       def index
         customers = Customers::CustomersFinderService.new(user: current_user, index_params:).call
-        render json: CustomerPresenter.payload_for_list(customers)
+        render json: CustomerPresenter.payload_for(customers)
       end
 
       def create
         customer = Customers::CustomerCreatorService.new(user: current_user, create_customer_params:).call
-        render json: CustomerPresenter.payload_for_item(customer), status: :created
+        render json: CustomerPresenter.payload_for(customer), status: :created
       end
 
       def update
         customer = Customers::CustomerUpdaterService.new(user: current_user, update_customer_params:).call
-        render json: CustomerPresenter.payload_for_item(customer), status: :ok
+        render json: CustomerPresenter.payload_for(customer), status: :ok
       end
 
       def destroy

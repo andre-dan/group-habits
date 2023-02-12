@@ -3,17 +3,17 @@ module Api
     class CategoriesController < Api::V1::ApiController
       def index
         categories = Categories::CategoriesFinderService.new(user: current_user, find_params:).call
-        render json: CategoryPresenter.payload_for_list(categories)
+        render json: CategoryPresenter.payload_for(categories)
       end
 
       def create
         category = Categories::CategoryCreatorService.new(user: current_user, create_category_params:).call
-        render json: CategoryPresenter.payload_for_item(category), status: :created
+        render json: CategoryPresenter.payload_for(category), status: :created
       end
 
       def update
         category = Categories::CategoryUpdaterService.new(user: current_user, update_category_params:).call
-        render json: CategoryPresenter.payload_for_item(category), status: :ok
+        render json: CategoryPresenter.payload_for(category), status: :ok
       end
 
       def destroy

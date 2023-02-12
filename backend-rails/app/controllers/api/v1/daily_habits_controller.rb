@@ -3,13 +3,13 @@ module Api
     class DailyHabitsController < Api::V1::ApiController
       def index
         daily_habits = DailyHabitsFinderService.new(user: current_user).call
-        render json: DailyHabitPresenter.payload_for_list(daily_habits)
+        render json: DailyHabitPresenter.payload_for(daily_habits)
       end
 
       def create
         daily_habit = DailyHabitCreatorService.new(user: current_user,
                                                    create_daily_habit_params:).call
-        render json: DailyHabitPresenter.payload_for_item(daily_habit), status: :created
+        render json: DailyHabitPresenter.payload_for(daily_habit), status: :created
       end
 
       private

@@ -3,31 +3,49 @@
 require 'rails_helper'
 
 RSpec.describe BasePresenter do
-  let(:category) { build(:category) }
+  let(:category) { create(:category) }
 
-  describe '.payload_for_item' do
-    subject { CategoryPresenter.payload_for_item(category) }
+  describe '.payload_for' do
+    context 'when resource is a single object' do
+      subject { CategoryPresenter.payload_for(category) }
 
-    it 'formats single object' do
-      expected_payload = {
-        id: category.id,
-        name: category.name
-      }
+      it 'formats single object' do
+        expected_payload = {
+          id: category.id,
+          name: category.name
+        }
 
-      is_expected.to eq expected_payload
+        is_expected.to eq expected_payload
+      end
     end
-  end
 
-  describe '.payload_for_list' do
-    subject { CategoryPresenter.payload_for_list([category]) }
+    context 'when resources is an object array' do
+      subject { CategoryPresenter.payload_for([category]) }
 
-    it 'formats single object' do
-      expected_payload = [{
-        id: category.id,
-        name: category.name
-      }]
+      it 'formats an object array' do
+        expected_payload = [{
+          id: category.id,
+          name: category.name
+        }]
 
-      is_expected.to eq expected_payload
+        is_expected.to eq expected_payload
+      end
+    end
+
+    context 'when resources is an relation' do
+      let(:user) { create(:user) }
+      let(:category) { create(:category, user:) }
+
+      subject { CategoryPresenter.payload_for(category) }
+
+      it 'formats an object array' do
+        expected_payload = {
+          id: category.id,
+          name: category.name
+        }
+
+        is_expected.to eq expected_payload
+      end
     end
   end
 end

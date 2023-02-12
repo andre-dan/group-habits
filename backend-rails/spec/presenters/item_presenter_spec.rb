@@ -16,8 +16,8 @@ RSpec.describe ItemPresenter do
           sale_price: item.sale_price,
           purchase_price: item.purchase_price,
           item_type: item.item_type,
-          category: CategoryPresenter.payload_for_item(item.category),
-          sales_unit: SalesUnitPresenter.payload_for_item(item.sales_unit)
+          category: CategoryPresenter.payload_for(item.category),
+          sales_unit: SalesUnitPresenter.payload_for(item.sales_unit)
         }
 
         is_expected.to eq expected_payload
@@ -35,7 +35,7 @@ RSpec.describe ItemPresenter do
           purchase_price: item.purchase_price,
           item_type: item.item_type,
           category: nil,
-          sales_unit: SalesUnitPresenter.payload_for_item(item.sales_unit)
+          sales_unit: SalesUnitPresenter.payload_for(item.sales_unit)
         }
 
         is_expected.to eq expected_payload

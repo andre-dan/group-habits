@@ -15,8 +15,8 @@ class ItemPresenter < BasePresenter
       sale_price: item.sale_price.to_f,
       purchase_price: item.purchase_price.to_f,
       item_type: item.item_type,
-      category: CategoryPresenter.payload_for_item(item.category),
-      sales_unit: SalesUnitPresenter.payload_for_item(item.sales_unit)
+      category: item.category.nil? ? nil : CategoryPresenter.payload_for(item.category),
+      sales_unit: item.sales_unit.nil? ? nil : SalesUnitPresenter.payload_for(item.sales_unit)
     }
   end
 end
